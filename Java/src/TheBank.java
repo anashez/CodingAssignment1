@@ -1,64 +1,60 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TheBank implements IBank {
-    private List<IAccount> allAccounts;
-    public TheBank() { this.allAccounts = new ArrayList<IAccount>(); }
-    @Override
-    public void OpenACCOUNT(IAccount account) {
-            allAccounts.add(account);
+    private List<IAccount> accounts;
+
+    public TheBank() {
+        this.accounts = new ArrayList<>();
     }
 
+    @Override
+    public void OpenAccount(IAccount account) {
+        this.accounts.add(account);
+
+    }
 
     @Override
     public void CloseAccount(int accountNumber) {
-        Iterator<IAccount> iterator = allAccounts.iterator();
-
-        while (iterator.hasNext()) {
-            IAccount account = iterator.next();
-
+        for (IAccount account : this.accounts) {
             if (account.GetAccountNumber() == accountNumber) {
-                if (account.GetCurrentBalance() >= 0) {
-                    iterator.remove();
+                if (account.GetCurrentBalance() < 0) {
+                    System.out.println("account is not closed due to debt");
                 } else {
-                    System.out.println("Account not closed due to debt.");
+                    this.accounts.remove(account);
+
                 }
-                return; // Exit the method once you find the account
             }
         }
-    }
 
     }
 
     @Override
-    public List<IAccount> GetAllAccounts() { return new ArrayList<>(allAccounts); }
-
+    public List<IAccount> GetAllAccounts() {
+        return this.accounts;
+    }
 
     @Override
     public List<IAccount> GetAllAccountsInDebt() {
-        List<IAccount> accountsInDebt = new ArrayList<>();
+        List<IAccount> debtAccounts = new ArrayList<>();
 
-        for (IAccount account : allAccounts) {
+        for (IAccount account : this.accounts) {
             if (account.GetCurrentBalance() < 0) {
-                accountsInDebt.add(account);
+                debtAccounts.add(account);
             }
         }
-
-        return accountsInDebt;
+        return debtAccounts;
     }
-
 
     @Override
     public List<IAccount> GetAllAccountsWithBalance(double balanceAbove) {
-        List<IAccount> accountsWithBalanceAbove = new ArrayList<>();
+        List<IAccount> biggerBalanceAccounts = new ArrayList<>();
+        for (IAccount account : this.accounts) {
+            if (account.GetCurrentBalance() > 0) {
+                biggerBalanceAccounts.add(account);
 
-        for (IAccount account : allAccounts) {
-            if (account.GetCurrentBalance() > balanceAbove) {
-                accountsWithBalanceAbove.add(account);
             }
         }
-
-        return accountsWithBalanceAbove;
+        return biggerBalanceAccounts;
     }
 }
-
-
