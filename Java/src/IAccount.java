@@ -3,5 +3,5 @@ public interface IAccount {
     double Withdraw(double amount);
     double GetCurrentBalance();
     int GetAccountNumber();
-
 }
+

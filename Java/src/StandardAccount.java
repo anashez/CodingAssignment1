@@ -2,29 +2,28 @@ public class StandardAccount implements IAccount{
     private int accountNumber;
     private double creditLimit;
     private double balance;
-    public StandardAccount(int accountNumber, double creditLimit,double balance){
-
+    public StandardAccount(int accountNumber, double creditLimit){
         this.accountNumber = accountNumber;
         this.creditLimit = creditLimit;
-        this.balance = balance;
     }
     @Override
     public void Deposit(double amount) {
-        this.balance=+amount;
+        this.balance+=amount;
 
     }
 
     @Override
     public double Withdraw(double amount) {
         if (amount<=this.balance){
-            this.balance=-amount;
+            this.balance-=amount;
             return amount;
         }
         else {
-            this.balance=-this.balance+Math.abs(this.creditLimit);
-                return this.balance+Math.abs(this.creditLimit);
-            }
+            double currentBalance = this.balance;
+            this.balance = this.creditLimit;
+            return currentBalance - this.creditLimit;
         }
+    }
 
 
     @Override

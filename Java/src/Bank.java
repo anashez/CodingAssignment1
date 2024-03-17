@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TheBank implements IBank {
+public class Bank implements IBank {
     private List<IAccount> accounts;
 
-    public TheBank() {
+    public Bank() {
         this.accounts = new ArrayList<>();
     }
 
@@ -22,7 +22,7 @@ public class TheBank implements IBank {
                     System.out.println("account is not closed due to debt");
                 } else {
                     this.accounts.remove(account);
-
+                    break;
                 }
             }
         }

@@ -1,12 +1,25 @@
-public class BasicAccount implements IAccount{
+public class BasicAccount implements IAccount {
     private int accountNumber;
     private double withdrawalLimit;
     private double balance;
-    public BasicAccount(int accountNumber,double withdrawalLimit,double balance){
 
+    public BasicAccount(int accountNumber, double withdrawalLimit) {
         this.accountNumber = accountNumber;
         this.withdrawalLimit = withdrawalLimit;
-        this.balance = balance;
+    }
+
+    @Override
+    public double Withdraw(double amount) {
+        if (this.balance <this.withdrawalLimit){
+            this.balance = 0;}
+        if (amount <= this.withdrawalLimit && amount <this.balance) {
+            this.balance -= amount;
+            return amount;
+        } else {
+            this.balance -= this.withdrawalLimit;
+            return this.withdrawalLimit;
+        }
+
     }
 
     public void setAccountNumber(int accountNumber) {
@@ -23,21 +36,8 @@ public class BasicAccount implements IAccount{
 
     @Override
     public void Deposit(double amount) {
-        this.balance=+amount;
+        this.balance += amount;
     }
-
-    @Override
-    public double Withdraw(double amount) {
-        if(amount<=this.withdrawalLimit) {
-            this.balance=-amount;
-            return amount;
-        }
-            else{
-            this.balance=-this.withdrawalLimit;
-
-            return this.withdrawalLimit;
-            }
-        }
 
 
     @Override
@@ -52,6 +52,8 @@ public class BasicAccount implements IAccount{
 
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        if (balance > 0) {
+            this.balance = balance;
+        }
     }
 }

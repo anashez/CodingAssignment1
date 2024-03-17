@@ -1,19 +1,18 @@
 public class PremiumAccount implements IAccount{
     private int accountNumber;
     private double balance;
-    public PremiumAccount(int accountNumber,double balance){
+    public PremiumAccount(int accountNumber){
         this.accountNumber = accountNumber;
-        this.balance = balance;
     }
 
     @Override
     public void Deposit(double amount) {
-        this.balance=+amount;
+        this.balance+=amount;
     }
 
     @Override
     public double Withdraw(double amount) {
-        this.balance=-amount;
+        this.balance-=amount;
         return amount;
     }
 
